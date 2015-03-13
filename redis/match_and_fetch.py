@@ -1,9 +1,11 @@
 import redis
 import csv
 import re
-
+import os
 
 cRedis = redis.Redis()
+clear = lambda: os.system('clear')
+
 
 def readingcsv():
     c = csv.reader(open("example.csv", "rb"))
@@ -27,22 +29,19 @@ def crawl(pat):
 
 def main():
     while True:
-    pattern = raw_input('Number: ')
-    if len(pattern) >= 3:
-        num_format = re.compile("^[1-9][0-9]*\.?[0-9]*")
-        isNumber = re.match(num_format, pattern)
-        if isNumber:
-            crawl(pattern)
+        pattern = raw_input('Number: ')
+        if len(pattern) >= 3:
+            num_format = re.compile("^[1-9][0-9]*\.?[0-9]*")
+            isNumber = re.match(num_format, pattern)
+            if isNumber:
+                crawl(pattern)
+            else:
+                clear()
+                print "Make Sense?"
+
         else:
             clear()
-            print "Make Sense?"
-
-    else:
-        clear()
-        print "Characters should be equal or more than 3"
-
-
+            print "Characters should be equal or more than 3"
 
 if __name__ == '__main__':
     main()
-
