@@ -1,16 +1,14 @@
 import redis
 import csv
 import re
-import os
+
 
 cRedis = redis.Redis()
 
-c = csv.reader(open("example.csv", "rb"))
-
-for row in c:
-    cRedis.hmset(row[3], {'name': row[1]+' '+row[2], 'email': row[4], 'college': row[5], 'number': row[3]})
-
-clear = lambda: os.system('clear')
+def readingcsv():
+    c = csv.reader(open("example.csv", "rb"))
+    for row in c:
+        cRedis.hmset(row[3], {'name': row[1]+' '+row[2], 'email': row[4], 'college': row[5], 'number': row[3]})
 
 
 def crawl(pat):
@@ -27,7 +25,8 @@ def crawl(pat):
         print "No result found"
 
 
-while True:
+def main():
+    while True:
     pattern = raw_input('Number: ')
     if len(pattern) >= 3:
         num_format = re.compile("^[1-9][0-9]*\.?[0-9]*")
@@ -41,3 +40,9 @@ while True:
     else:
         clear()
         print "Characters should be equal or more than 3"
+
+
+
+if __name__ == '__main__':
+    main()
+
